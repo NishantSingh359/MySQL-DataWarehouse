@@ -182,11 +182,14 @@ SELECT
         WHEN sls_sales != sls_quantity * ABS(CAST(sls_price AS FLOAT)) OR
             sls_sales <= 0 OR
             sls_sales IS NULL 
-        THEN sls_quantity * ABS(sls_price)
+        THEN IF((sls_quantity * ABS(sls_price)) = 0, NULL, sls_quantity * ABS(sls_price))
         ELSE sls_sales
     END AS sls_sales,
     sls_quantity,
-    ABS(CAST(sls_price AS FLOAT)) AS sls_price
+    CASE 
+        WHEN sls_price = 0 THEN NULL
+        ELSE ABS(CAST(sls_price AS FLOAT))
+    END AS sls_price
 FROM (
     SELECT *,
     ROW_NUMBER() OVER(PARTITION BY sls_ord_num) AS flag_one
