@@ -18,13 +18,12 @@ DROP TABLE IF EXISTS gold.dim_customer;
 CREATE TABLE gold.dim_customer (
     customer_key INT NOT NULL,
     customer_id INT PRIMARY KEY NOT NULL,
-    fname VARCHAR(20),
-    lname VARCHAR(20),
+    first_name VARCHAR(20),
+    last_name VARCHAR(20),
     gender VARCHAR(20),
     marital_status VARCHAR(20),
     country VARCHAR(20),
-    birthdate DATE,
-    create_date DATE
+    birthdate DATE
 );
 
 SELECT '=========== LOADING DATA INTO gold.dim_customer';
@@ -33,13 +32,12 @@ TRUNCATE TABLE gold.dim_customer;
 INSERT INTO gold.dim_customer( 
     customer_key,
     customer_id,
-    fname,
-    lname,
+    first_name,
+    last_name,
     gender,
     marital_status,
     country,
-    birthdate,
-    create_date
+    birthdate
 )
 SELECT
     ROW_NUMBER() OVER(ORDER BY cst_key) AS cst_id,
@@ -52,8 +50,7 @@ SELECT
     END AS cst_gndr,
     cst_marital_status,
     cntry,
-    bdate,
-    cst_create_date
+    bdate
 FROM silver.crm_cust_info
 LEFT JOIN silver.erp_cust_loc
 ON silver.crm_cust_info.cst_key = silver.erp_cust_loc.cid
@@ -71,8 +68,8 @@ CREATE TABLE gold.dim_product(
     product_key INT NOT NULL,
     product_id VARCHAR(20) PRIMARY KEY NOT NULL,
     product_name VARCHAR(50),
-    subcategory VARCHAR(50),
     category VARCHAR(50),
+    subcategory VARCHAR(50),
     product_line VARCHAR(20),
     maintenance VARCHAR(20),
     cost FLOAT,
@@ -87,8 +84,8 @@ INSERT INTO gold.dim_product(
     product_key,
     product_id,
     product_name,
-    subcategory,
     category,
+    subcategory,
     product_line,
     maintenance,
     cost,
@@ -99,8 +96,8 @@ SELECT
     ROW_NUMBER() OVER(ORDER BY prd_launch_dt, prd_key) AS prd_key,
     prd_key,
     prd_nm,
-    subcat,
     cat,
+    subcat,
     prd_line,
     maintenance,
     prd_cost,
