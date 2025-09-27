@@ -231,7 +231,7 @@ SELECT '';
 SELECT IF (
     (SELECT COUNT(*)
     FROM (
-        SELECT price
+        SELECT *
         FROM gold.fact_sales
         WHERE price <= 0
     ) AS A) = 0,
