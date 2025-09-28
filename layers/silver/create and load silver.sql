@@ -201,24 +201,24 @@ SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD ERP TABLES ===========';
 SELECT '-----------------------------------------------';
 
--- ============================
--- CREATE & LOAD TABLE erp_cate
--- ============================
+-- ================================
+-- CREATE & LOAD TABLE erp_prd_cate
+-- ================================
 
-SELECT '============================ CREATEING erp_cate';
-DROP TABLE IF EXISTS silver.erp_cate;
+SELECT '======================== CREATEING erp_prd_cate';
+DROP TABLE IF EXISTS silver.erp_prd_cate;
 
-CREATE TABLE silver.erp_cate(
+CREATE TABLE silver.erp_prd_cate(
     id VARCHAR(10),
     cat VARCHAR(20),
     subcat VARCHAR(20),
     maintenance VARCHAR(10)
 );
 
-SELECT '==================== LOADING DATA INTO erp_cate';
-TRUNCATE TABLE silver.erp_cate;
+SELECT '================ LOADING DATA INTO erp_prd_cate';
+TRUNCATE TABLE silver.erp_prd_cate;
 
-INSERT INTO silver.erp_cate(
+INSERT INTO silver.erp_prd_cate(
 id,
 cat,
 subcat,
@@ -232,7 +232,7 @@ CASE
     WHEN maintenance IS NULL THEN 'N/A'
     ELSE TRIM(REPLACE(maintenance,'\r',''))
 END AS maintenance
-FROM bronze.erp_cate;
+FROM bronze.erp_prd_cate;
 
 -- ================================
 -- CREATE & LOAD TABLE erp_cust_loc

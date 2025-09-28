@@ -104,8 +104,8 @@ SELECT
     prd_launch_dt,
     prd_last_ord_dt
 FROM silver.crm_prd_info
-LEFT JOIN silver.erp_cate
-ON silver.crm_prd_info.prd_cate_key = silver.erp_cate.id;
+LEFT JOIN silver.erp_prd_cate
+ON silver.crm_prd_info.prd_cate_key = silver.erp_prd_cate.id;
 
 -- ==============================
 -- CREATE & LOAD TABLE fact_sales
@@ -162,3 +162,5 @@ SELECT '===============================================';
 SELECT '============ GOLD LAYER COMPLETED =============';
 SELECT '===============================================';
 SELECT '                                               ';
+
+

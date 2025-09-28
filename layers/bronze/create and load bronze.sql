@@ -31,7 +31,7 @@ CREATE TABLE bronze.crm_cust_info(
 SELECT '=============== LOADING DATA INTO crm_cust_info';
 TRUNCATE TABLE bronze.crm_cust_info;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cust_info.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/crm_cust_info.csv'
 INTO TABLE bronze.crm_cust_info
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -67,7 +67,7 @@ CREATE TABLE bronze.crm_prd_info (
 SELECT '================ LOADING DATA INTO crm_prd_info';
 TRUNCATE TABLE bronze.crm_prd_info;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/prd_info.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/crm_prd_info.csv'
 INTO TABLE bronze.crm_prd_info
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -106,7 +106,7 @@ CREATE TABLE bronze.crm_sales_details (
 SELECT '=========== LOADING DATA INTO crm_sales_details';
 TRUNCATE TABLE bronze.crm_sales_details;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/sales_details.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/crm_sales_details.csv'
 INTO TABLE bronze.crm_sales_details
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -128,25 +128,25 @@ SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD ERP TABLES ===========';
 SELECT '-----------------------------------------------';
 
--- ============================
--- CREATE & LOAD TABLE erp_cate
--- ============================
+-- ================================
+-- CREATE & LOAD TABLE erp_prd_cate
+-- ================================
 
-SELECT '============================ CREATEING erp_cate';
-DROP TABLE IF EXISTS bronze.erp_cate;
+SELECT '======================== CREATEING erp_prd_cate';
+DROP TABLE IF EXISTS bronze.erp_prd_cate;
 
-CREATE TABLE bronze.erp_cate(
+CREATE TABLE bronze.erp_prd_cate(
     id VARCHAR(10),
     cat VARCHAR(20),
     subcat VARCHAR(20),
     maintenance VARCHAR(10)
 );
 
-SELECT '==================== LOADING DATA INTO erp_cate';
-TRUNCATE TABLE bronze.erp_cate;
+SELECT '================ LOADING DATA INTO erp_prd_cate';
+TRUNCATE TABLE bronze.erp_prd_cate;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/erp_cate.csv'
-INTO TABLE bronze.erp_cate
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/erp_prd_cate.csv'
+INTO TABLE bronze.erp_prd_cate
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
