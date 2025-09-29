@@ -15,6 +15,8 @@ SELECT '-----------------------------------------------';
 -- CREATE & LOAD TABLE crm_cust_info
 -- =================================
 
+SET @time1 = CURRENT_TIME();
+
 SELECT '======================= CREATEING crm_cust_info';
 DROP TABLE IF EXISTS bronze.crm_cust_info;
 
@@ -47,9 +49,14 @@ cst_marital_status = NULLIF(@cst_marital_status, ''),
 cst_gndr = NULLIF(@cst_gndr, ''),
 cst_create_date = NULLIF(@cst_create_date, '');
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ================================
 -- CREATE & LOAD TABLE crm_prd_info
 -- ================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '======================= CREATEING crm_cust_info';
 DROP TABLE IF EXISTS bronze.crm_prd_info;
@@ -83,9 +90,14 @@ prd_line = NULLIF(@prd_line,''),
 prd_start_dt = NULLIF(@prd_start_dt,''),
 prd_end_dt = NULLIF(@prd_end_dt,NULL);
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- =====================================
 -- CREATE & LOAD TABLE crm_sales_details
 -- =====================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '=================== CREATEING crm_sales_details';
 DROP TABLE IF EXISTS bronze.crm_sales_details; 
@@ -124,6 +136,9 @@ sls_sales = NULLIF(@sls_sales,''),
 sls_quantity = NULLIF(@sls_quantity,''),
 sls_price = NULLIF(@sls_price,'');
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD ERP TABLES ===========';
 SELECT '-----------------------------------------------';
@@ -131,6 +146,8 @@ SELECT '-----------------------------------------------';
 -- ================================
 -- CREATE & LOAD TABLE erp_prd_cate
 -- ================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '======================== CREATEING erp_prd_cate';
 DROP TABLE IF EXISTS bronze.erp_prd_cate;
@@ -158,9 +175,14 @@ cat = NULLIF(@cat,''),
 subcat = NULLIF(@subcat,''),
 maintenance = NULLIF(@maintenance,'');
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ================================
 -- CREATE & LOAD TABLE erp_cust_loc
 -- ================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '======================== CREATEING erp_cust_loc';
 DROP TABLE IF EXISTS bronze.erp_cust_loc;
@@ -184,9 +206,14 @@ SET
 cid = NULLIF(@cid,''),
 cntry = NULLIF(@cntry,'');
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- =====================================
 -- CREATE & LOAD TABLE erp_cust_per_info
 -- =====================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '=================== CREATEING erp_cust_per_info';
 DROP TABLE IF EXISTS bronze.erp_cust_per_info;
@@ -211,6 +238,9 @@ SET
 cid = NULLIF(@cid,''),
 bdate = NULLIF(@bdate,''),
 gen = NULLIF(@gen,'');
+
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SELECT '===============================================';
 SELECT '=========== BORNZE LAYER COMPLETED ============';

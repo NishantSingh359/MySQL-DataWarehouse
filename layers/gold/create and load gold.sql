@@ -12,6 +12,8 @@ CREATE SCHEMA gold;
 -- CREATE & LOAD TABLE dim_customer
 -- ================================
 
+SET @time1 = CURRENT_TIME();
+
 SELECT '==================== CREATING gold.dim_customer';
 DROP TABLE IF EXISTS gold.dim_customer;
 
@@ -57,9 +59,14 @@ ON silver.crm_cust_info.cst_key = silver.erp_cust_loc.cid
 LEFT JOIN silver.erp_cust_per_info
 ON silver.crm_cust_info.cst_key = silver.erp_cust_per_info.cid;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ===============================
 -- CREATE & LOAD TABLE dim_product
 -- ===============================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '===================== CREATING gold.dim_product';
 DROP TABLE IF EXISTS gold.dim_product;
@@ -107,9 +114,14 @@ FROM silver.crm_prd_info
 LEFT JOIN silver.erp_prd_cate
 ON silver.crm_prd_info.prd_cate_key = silver.erp_prd_cate.id;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ==============================
 -- CREATE & LOAD TABLE fact_sales
 -- ==============================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '====================== CREATING gold.fact_sales';
 DROP TABLE IF EXISTS gold.fact_sales;
@@ -157,6 +169,8 @@ SELECT
     sls_due_dt
 FROM silver.crm_sales_details;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SELECT '===============================================';
 SELECT '============ GOLD LAYER COMPLETED =============';

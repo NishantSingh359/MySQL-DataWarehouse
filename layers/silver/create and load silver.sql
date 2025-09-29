@@ -15,6 +15,8 @@ SELECT '-----------------------------------------------';
 -- CREATE & LOAD TABLE crm_cust_info
 -- =================================
 
+SET @time1 = CURRENT_TIME();
+
 SELECT '======================= CREATEING crm_cust_info';
 DROP TABLE IF EXISTS silver.crm_cust_info;
 
@@ -67,10 +69,14 @@ FROM (
 )AS A
 WHERE flag_one = 1 AND flag_two = 1;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ================================
 -- CREATE & LOAD TABLE crm_prd_info
 -- ================================
 
+SET @time1 = CURRENT_TIME();
 SET @days = (SELECT ROUND(AVG(days)) FROM (SELECT DATEDIFF(sls_ship_dt,CAST(sls_order_dt AS DATE)) AS days FROM bronze.crm_sales_details) AS A);
 
 SELECT '======================== CREATEING crm_prd_info';
@@ -132,9 +138,14 @@ FROM (
 ) AS A
 WHERE flag_one = 1;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- =====================================
 -- CREATE & LOAD TABLE crm_sales_details
 -- =====================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '=================== CREATEING crm_sales_details';
 DROP TABLE IF EXISTS silver.crm_sales_details; 
@@ -197,6 +208,9 @@ FROM (
 ) AS A
 WHERE flag_one = 1 AND sls_ord_num  IS NOT NULL;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD ERP TABLES ===========';
 SELECT '-----------------------------------------------';
@@ -204,6 +218,8 @@ SELECT '-----------------------------------------------';
 -- ================================
 -- CREATE & LOAD TABLE erp_prd_cate
 -- ================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '======================== CREATEING erp_prd_cate';
 DROP TABLE IF EXISTS silver.erp_prd_cate;
@@ -234,9 +250,14 @@ CASE
 END AS maintenance
 FROM bronze.erp_prd_cate;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- ================================
 -- CREATE & LOAD TABLE erp_cust_loc
 -- ================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '======================== CREATEING erp_cust_loc';
 DROP TABLE IF EXISTS silver.erp_cust_loc;
@@ -264,9 +285,14 @@ CASE REPLACE(TRIM(cntry),'\r','')
 END AS cntry
 FROM bronze.erp_cust_loc;
 
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
 -- =====================================
 -- CREATE & LOAD TABLE erp_cust_per_info
 -- =====================================
+
+SET @time1 = CURRENT_TIME();
 
 SELECT '=================== CREATEING erp_cust_per_info';
 DROP TABLE IF EXISTS silver.erp_cust_per_info;
@@ -299,6 +325,9 @@ CASE
 ELSE REPLACE(REPLACE(TRIM(gen),'\r',''),' ','')
 END AS gen
 FROM bronze.erp_cust_per_info;
+
+SET @time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SELECT '===============================================';
 SELECT '=========== SILVER LAYER COMPLETED ============';
