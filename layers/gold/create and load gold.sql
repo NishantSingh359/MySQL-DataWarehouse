@@ -125,12 +125,12 @@ CREATE TABLE gold.fact_sales(
     order_number VARCHAR(20),
     product_keys VARCHAR(20), 
     customer_keys INT,
-    price FLOAT,
-    quantity INT,
-    sales FLOAT,
     order_date DATE,
     ship_date DATE,
     delivery_date DATE,
+    price FLOAT,
+    quantity INT,
+    sales FLOAT,
     FOREIGN KEY (product_keys) REFERENCES dim_product(product_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -145,23 +145,23 @@ INSERT INTO gold.fact_sales(
     order_number,
     product_keys,
     customer_keys,
-    price,
-    quantity,
-    sales,
     order_date,
     ship_date,
-    delivery_date
+    delivery_date,
+    price,
+    quantity,
+    sales
 )
 SELECT
     sls_ord_num,
     sls_prd_key,
     sls_cust_id,
-    sls_price,
-    sls_quantity,
-    sls_sales,
     sls_order_dt,
     sls_ship_dt,
-    sls_due_dt
+    sls_due_dt,
+    sls_price,
+    sls_quantity,
+    sls_sales
 FROM silver.crm_sales_details;
 
 SET @time2 = CURRENT_TIME();
@@ -171,5 +171,3 @@ SELECT '===============================================';
 SELECT '============ GOLD LAYER COMPLETED =============';
 SELECT '===============================================';
 SELECT '                                               ';
-
-
