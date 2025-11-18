@@ -89,7 +89,7 @@ SELECT
         HAVING one != two
         ) AS A
         ) = 0,
-        'No Unwanted or Hidden Spaces',
+        'No Unwanted or Hidden Spaces Found',
         '---- Unwanted or Hidden Spaces Found ----'
 ) AS '==== Product Name';
 
@@ -171,7 +171,7 @@ SELECT IF(
     )AS A) = 0,
     'No Invalid Product Keys Found',
     '---- Invalid Product Keys Found ----'
-) AS '==== Product Ids';
+) AS '==== Product Keys';
 
 SELECT '';
 SELECT IF(
@@ -183,7 +183,7 @@ SELECT IF(
     )AS A) = 0,
     'No Invalid Customer Keys Found',
     '---- Invalid Customer Keys Found ----'
-) AS '==== Product Ids';
+) AS '==== Customer Keys';
 
 SELECT '';
 SELECT IF(
@@ -211,7 +211,7 @@ SELECT IF(
     ) AS A) = 0,
     'No Invalid Date Found',
     '---- Invalid Date Found ----'
-) AS '==== Order Date';
+) AS '==== Delivery Date';
 
 SELECT '';
 SELECT IF(
@@ -225,7 +225,7 @@ SELECT IF(
     ) AS A) = 0,
     'No Invalid Date',
     '---- Invalid Date Found ----'
-) AS '==== Order Date Found ';
+) AS '==== Order Date';
 
 SELECT '';
 SELECT IF (
