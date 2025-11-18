@@ -17,7 +17,7 @@
 
 ## Sales Data Mart
 ---
-<img width="781" height="459" alt="Data Warehouse new -Data Mart (Star Schema) drawio" src="https://github.com/user-attachments/assets/aa831dca-ee6c-4386-8d7c-1b3bfd3cef34" />
+<img width="781" height="459" alt="Data Warehouse new -Data Mart (Star Schema) drawio" src="https://github.com/user-attachments/assets/86f41c6d-b58e-475a-a999-dd701a184a27" />
 
 ## .bat files
 ---
@@ -25,3 +25,4 @@ Using .bat files to load data, more simple way to using stored procedure without
 ----
 
   <img width="1324" height="1002" alt="Untitled Diagram-Page-7 drawio" src="https://github.com/user-attachments/assets/d2fc3812-08db-4727-a0b6-7a74c0cef503" />
+
