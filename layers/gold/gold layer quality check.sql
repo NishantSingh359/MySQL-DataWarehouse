@@ -9,8 +9,8 @@ SELECT
     IF(
         (SELECT COUNT(*)
         FROM(SELECT 
-        CHAR_LENGTH(fname) AS one,
-        CHAR_LENGTH(TRIM(fname)) AS two
+        CHAR_LENGTH(first_name) AS one,
+        CHAR_LENGTH(TRIM(first_name)) AS two
         FROM gold.dim_customer
         HAVING one != two
         ) AS A
@@ -24,8 +24,8 @@ SELECT
     IF(
         (SELECT COUNT(*)
         FROM(SELECT 
-        CHAR_LENGTH(lname) AS one,
-        CHAR_LENGTH(TRIM(lname)) AS two
+        CHAR_LENGTH(last_name) AS one,
+        CHAR_LENGTH(TRIM(last_name)) AS two
         FROM gold.dim_customer
         HAVING one != two
         ) AS A
@@ -70,8 +70,8 @@ SELECT
     IF(
         (SELECT COUNT(*) FROM gold.dim_customer
         WHERE birthdate < '1900-01-01' OR birthdate > CURRENT_DATE()) = 0,
-        'No Invailid Birthdate Found',
-        '---- Invailid Birthdate Found ----'
+        'No Invalid Birthdate Found',
+        '---- Invalid Birthdate Found ----'
 ) AS '==== Birthdate';
 
 
@@ -165,25 +165,25 @@ SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
     FROM (
-        SELECT product_id
+        SELECT product_keys
         FROM gold.fact_sales
-        WHERE product_id NOT IN (SELECT product_id FROM gold.dim_product)
+        WHERE product_keys NOT IN (SELECT product_keys FROM gold.dim_product)
     )AS A) = 0,
-    'No Invalid Product Id Found',
-    '---- Invalid Product Id Found ----'
-) AS '==== Product Id';
+    'No Invalid Product Keys Found',
+    '---- Invalid Product Keys Found ----'
+) AS '==== Product Ids';
 
 SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
     FROM (
-        SELECT customer_id
+        SELECT customer_keys
         FROM gold.fact_sales
-        WHERE customer_id NOT IN (SELECT customer_id FROM gold.dim_customer)
+        WHERE customer_keys NOT IN (SELECT customer_keys FROM gold.dim_customer)
     )AS A) = 0,
-    'No Invalid Product Id Found',
-    '---- Invalid Product Id Found ----'
-) AS '==== Product Id';
+    'No Invalid Customer Keys Found',
+    '---- Invalid Customer Keys Found ----'
+) AS '==== Product Ids';
 
 SELECT '';
 SELECT IF(
