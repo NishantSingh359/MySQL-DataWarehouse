@@ -17,10 +17,11 @@
 
 ## Sales Data Mart
 ---
-<img width="752" height="422" alt="Untitled Diagram-Sales Data Mart drawio" src="https://github.com/user-attachments/assets/c1bdf111-d077-4702-a92b-bdb157e4eadd" />
+<img width="781" height="459" alt="Data Warehouse new -Data Mart (Star Schema) drawio" src="https://github.com/user-attachments/assets/aa831dca-ee6c-4386-8d7c-1b3bfd3cef34" />
 
 ## .bat files
 ---
 Using .bat files to load data, more simple way to using stored procedure without open MySQL just click and enter passward and then.
 ----
+
   <img width="1324" height="1002" alt="Untitled Diagram-Page-7 drawio" src="https://github.com/user-attachments/assets/d2fc3812-08db-4727-a0b6-7a74c0cef503" />
