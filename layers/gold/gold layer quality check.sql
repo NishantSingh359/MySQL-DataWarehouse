@@ -207,25 +207,26 @@ SELECT IF(
         FROM gold.fact_sales
         WHERE ship_date > delivery_date OR
         ship_date < '2000-01-01' OR
-        ship_date > CURRENT_DATE()
+        ship_date > CURRENT_DATE() OR
+        ship_date < order_date
     ) AS A) = 0,
     'No Invalid Date Found',
     '---- Invalid Date Found ----'
-) AS '==== Delivery Date';
+) AS '==== Ship Date';
 
 SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
     FROM (
-        SELECT ship_date
+        SELECT delivery_date
         FROM gold.fact_sales
-        WHERE ship_date > delivery_date OR
-        ship_date < '2000-01-01' OR
-        ship_date > CURRENT_DATE()
+        WHERE delivery_date < ship_date  OR
+        delivery_date < '2000-01-01' OR
+        delivery_date > CURRENT_DATE()
     ) AS A) = 0,
-    'No Invalid Date',
+    'No Invalid Date Found',
     '---- Invalid Date Found ----'
-) AS '==== Order Date';
+) AS '==== Deliver Date';
 
 SELECT '';
 SELECT IF (
@@ -255,11 +256,11 @@ SELECT '';
 SELECT IF (
     (SELECT COUNT(*)
     FROM (
-        SELECT sales
+        SELECT amount
         FROM gold.fact_sales
-        WHERE sales <= 0
+        WHERE amount <= 0
     ) AS A) = 0,
     'No Invalid Data Found',
     '---- Invalid Data Found ----'
-) AS '==== Sales';
+) AS '==== Amount';
 
