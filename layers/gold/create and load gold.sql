@@ -130,7 +130,7 @@ CREATE TABLE gold.fact_sales(
     delivery_date DATE,
     price FLOAT,
     quantity INT,
-    sales FLOAT,
+    amount FLOAT,
     FOREIGN KEY (product_keys) REFERENCES dim_product(product_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -150,7 +150,7 @@ INSERT INTO gold.fact_sales(
     delivery_date,
     price,
     quantity,
-    sales
+    amount
 )
 SELECT
     sls_ord_num,
