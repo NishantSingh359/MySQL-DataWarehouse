@@ -181,7 +181,7 @@ SELECT
     sls_prd_key,
     sls_cust_id,
     CASE 
-        WHEN sls_order_dt IS NULL OR sls_order_dt = 0 THEN 
+        WHEN sls_order_dt IS NULL OR sls_order_dt = 0 OR LENGTH(sls_order_dt) != 8  THEN 
         DATE_SUB(
             sls_ship_dt, INTERVAL @days DAY
         )
@@ -201,12 +201,7 @@ SELECT
         WHEN sls_price = 0 THEN NULL
         ELSE ABS(CAST(sls_price AS FLOAT))
     END AS sls_price
-FROM (
-    SELECT *,
-    ROW_NUMBER() OVER(PARTITION BY sls_ord_num) AS flag_one
-    FROM bronze.crm_sales_details
-) AS A
-WHERE flag_one = 1 AND sls_ord_num  IS NOT NULL;
+FROM bronze.crm_sales_details;
 
 SET @time2 = CURRENT_TIME();
 SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
