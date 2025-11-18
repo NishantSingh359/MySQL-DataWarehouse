@@ -18,8 +18,7 @@ SELECT '==================== CREATING gold.dim_customer';
 DROP TABLE IF EXISTS gold.dim_customer;
 
 CREATE TABLE gold.dim_customer (
-    customer_key INT NOT NULL,
-    customer_id INT PRIMARY KEY NOT NULL,
+    customer_key INT PRIMARY KEY,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     gender VARCHAR(20),
@@ -33,7 +32,6 @@ TRUNCATE TABLE gold.dim_customer;
 
 INSERT INTO gold.dim_customer( 
     customer_key,
-    customer_id,
     first_name,
     last_name,
     gender,
@@ -42,7 +40,6 @@ INSERT INTO gold.dim_customer(
     birthdate
 )
 SELECT
-    ROW_NUMBER() OVER(ORDER BY cst_key) AS cst_id,
     SUBSTRING(cst_key,6),
     cst_firstname,
     cst_lastname,
@@ -72,8 +69,7 @@ SELECT '===================== CREATING gold.dim_product';
 DROP TABLE IF EXISTS gold.dim_product;
 
 CREATE TABLE gold.dim_product(
-    product_key INT NOT NULL,
-    product_id VARCHAR(20) PRIMARY KEY NOT NULL,
+    product_key VARCHAR(20) PRIMARY KEY,
     product_name VARCHAR(50),
     category VARCHAR(50),
     subcategory VARCHAR(50),
@@ -89,7 +85,6 @@ TRUNCATE TABLE gold.dim_product;
 
 INSERT INTO gold.dim_product(
     product_key,
-    product_id,
     product_name,
     category,
     subcategory,
@@ -100,7 +95,6 @@ INSERT INTO gold.dim_product(
     last_order_date
 )
 SELECT 
-    ROW_NUMBER() OVER(ORDER BY prd_launch_dt, prd_key) AS prd_key,
     prd_key,
     prd_nm,
     cat,
@@ -127,19 +121,20 @@ SELECT '====================== CREATING gold.fact_sales';
 DROP TABLE IF EXISTS gold.fact_sales;
 
 CREATE TABLE gold.fact_sales(
-    order_number VARCHAR(20) PRIMARY KEY NOT NULL,
-    product_id VARCHAR(20), 
-    customer_id INT,
+    sales_key INT PRIMARY KEY AUTO_INCREMENT,
+    order_number VARCHAR(20),
+    product_keys VARCHAR(20), 
+    customer_keys INT,
     price FLOAT,
     quantity INT,
     sales FLOAT,
     order_date DATE,
     ship_date DATE,
     delivery_date DATE,
-    FOREIGN KEY (product_id) REFERENCES dim_product(product_id)
+    FOREIGN KEY (product_keys) REFERENCES dim_product(product_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-    FOREIGN KEY (customer_id) REFERENCES dim_customer(customer_id)
+    FOREIGN KEY (customer_keys) REFERENCES dim_customer(customer_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
@@ -148,8 +143,8 @@ SELECT '============= LOADING DATA INTO gold.fact_sales';
 TRUNCATE TABLE gold.fact_sales;
 INSERT INTO gold.fact_sales(
     order_number,
-    product_id,
-    customer_id,
+    product_keys,
+    customer_keys,
     price,
     quantity,
     sales,
