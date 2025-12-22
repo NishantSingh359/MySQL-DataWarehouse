@@ -7,9 +7,12 @@ SELECT '================ CREATE SCHEMA ================';
 DROP SCHEMA IF EXISTS bronze;
 CREATE SCHEMA bronze;
 
+
 SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD CRM TABLES ===========';
 SELECT '-----------------------------------------------';
+
+SET @crm_time1 = CURRENT_TIME();
 
 -- =================================
 -- CREATE & LOAD TABLE crm_cust_info
@@ -139,9 +142,15 @@ sls_price = NULLIF(@sls_price,'');
 SET @time2 = CURRENT_TIME();
 SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
+SET @crm_time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@crm_time2, @crm_time1), '%i:%s') AS 'CRM TABLES LOADING TIME';
+
+
 SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD ERP TABLES ===========';
 SELECT '-----------------------------------------------';
+
+SET @erp_time1 = CURRENT_TIME();
 
 -- ================================
 -- CREATE & LOAD TABLE erp_prd_cate
@@ -241,6 +250,9 @@ gen = NULLIF(@gen,'');
 
 SET @time2 = CURRENT_TIME();
 SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
+
+SET @erp_time2 = CURRENT_TIME();
+SELECT DATE_FORMAT(TIMEDIFF(@erp_time2, @erp_time1), '%i:%s') AS 'ERP TABLES LOADING TIME';
 
 SELECT '===============================================';
 SELECT '=========== BORNZE LAYER COMPLETED ============';
