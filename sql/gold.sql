@@ -123,19 +123,19 @@ DROP TABLE IF EXISTS gold.fact_sales;
 CREATE TABLE gold.fact_sales(
     sales_key INT PRIMARY KEY AUTO_INCREMENT,
     order_number VARCHAR(20),
-    product_keys VARCHAR(20), 
-    customer_keys INT,
-    date_keys INT,
+    product_key VARCHAR(20), 
+    customer_key INT,
+    date_key INT,
     order_date DATE,
     ship_date DATE,
     delivery_date DATE,
     price FLOAT,
     quantity INT,
     amount FLOAT,
-    FOREIGN KEY (product_keys) REFERENCES dim_product(product_key)
+    FOREIGN KEY (product_key) REFERENCES dim_product(product_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-    FOREIGN KEY (customer_keys) REFERENCES dim_customer(customer_key)
+    FOREIGN KEY (customer_key) REFERENCES dim_customer(customer_key)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
@@ -144,9 +144,9 @@ SELECT '============= LOADING DATA INTO gold.fact_sales';
 TRUNCATE TABLE gold.fact_sales;
 INSERT INTO gold.fact_sales(
     order_number,
-    product_keys,
-    customer_keys,
-    date_keys,
+    product_key,
+    customer_key,
+    date_key,
     order_date,
     ship_date,
     delivery_date,
@@ -158,7 +158,7 @@ SELECT
     sls_ord_num,
     sls_prd_key,
     sls_cust_id,
-    CONCAT(YEAR(sls_order_dt), MONTH(sls_order_dt), DAY(sls_order_dt)),
+    date_format(sls_order_dt,'%Y%m%d'),
     sls_order_dt,
     sls_ship_dt,
     sls_due_dt,
