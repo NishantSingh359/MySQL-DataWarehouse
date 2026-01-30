@@ -57,7 +57,7 @@ SELECT
         WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 13 AND 19 THEN 'teen'
         WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 20 AND 35 THEN 'young adult'
         WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 36 AND 59 THEN 'adult'
-        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) > 60 THEN 'adult'
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) > 60 THEN 'senior'
         ELSE NULL
     END AS age_group,
     cst_marital_status,
