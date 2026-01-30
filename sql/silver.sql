@@ -314,7 +314,7 @@ bdate,
 gen
 )
 SELECT 
-SUBSTRING(cid,4,CHAR_LENGTH(cid)) AS cid,
+CONCAT('AW',RIGHT(TRIM(cid),8)) AS cid,
 CASE
     WHEN bdate < '1900-01-01' OR bdate > CURRENT_DATE() THEN NULL
     ELSE bdate
