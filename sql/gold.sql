@@ -22,6 +22,8 @@ CREATE TABLE gold.dim_customer (
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     gender VARCHAR(20),
+    age INT,
+    age_group VARCHAR(20),
     marital_status VARCHAR(20),
     country VARCHAR(20),
     birthdate DATE
@@ -35,6 +37,8 @@ INSERT INTO gold.dim_customer(
     first_name,
     last_name,
     gender,
+    age,
+    age_group,
     marital_status,
     country,
     birthdate
@@ -47,6 +51,15 @@ SELECT
         WHEN cst_gndr = 'N/A' THEN IF(gen IS NULL, 'N/A',gen)
         ELSE cst_gndr
     END AS cst_gndr,
+    TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) AS Age,
+    CASE 
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 0 AND 12 THEN 'child'
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 13 AND 19 THEN 'teen'
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 20 AND 35 THEN 'young adult'
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) BETWEEN 36 AND 59 THEN 'adult'
+        WHEN TIMESTAMPDIFF(YEAR, bdate, DATE('2014-02-01')) > 60 THEN 'adult'
+        ELSE NULL
+    END AS age_group,
     cst_marital_status,
     cntry,
     bdate
@@ -55,6 +68,7 @@ LEFT JOIN silver.cust_loc
 ON silver.cust_info.cst_key = silver.cust_loc.cid
 LEFT JOIN silver.cust_per_info
 ON silver.cust_info.cst_key = silver.cust_per_info.cid;
+
 
 SET @time2 = CURRENT_TIME();
 SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
