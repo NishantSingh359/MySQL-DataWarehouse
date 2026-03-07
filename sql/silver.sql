@@ -79,7 +79,6 @@ SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%s') AS 'TABLE LOADING TIME';
 -- ================================
 
 SET @time1 = CURRENT_TIME();
-SET @days = (SELECT ROUND(AVG(days)) FROM (SELECT DATEDIFF(sls_ship_dt,CAST(sls_order_dt AS DATE)) AS days FROM bronze.sales_details) AS A);
 
 SELECT '============================ CREATEING prd_info';
 
@@ -164,6 +163,10 @@ CREATE TABLE silver.sales_details (
     sls_price FLOAT
 );
 
+SET @day1 = (SELECT ROUND(AVG(days)) FROM (SELECT DATEDIFF(sls_ship_dt, CAST(sls_order_dt AS DATE)) AS days FROM bronze.sales_details) AS A);
+
+SET @day2 = (SELECT ROUND(AVG(days)) FROM (SELECT DATEDIFF(sls_due_dt, CAST(sls_ship_dt AS DATE)) AS days FROM bronze.sales_details) AS A);
+
 SELECT '=============== LOADING DATA INTO sales_details';
 TRUNCATE TABLE silver.sales_details;
 
@@ -183,22 +186,36 @@ SELECT
     sls_prd_key,
     sls_cust_id,
     CASE 
-        WHEN sls_order_dt IS NULL OR sls_order_dt = 0 OR LENGTH(sls_order_dt) != 8  THEN 
+        WHEN sls_order_dt IS NULL OR sls_order_dt = 0 THEN 
         DATE_SUB(
-            sls_ship_dt, INTERVAL @days DAY
+            sls_ship_dt, INTERVAL @day1 DAY
         )
         ELSE CAST(sls_order_dt AS DATE) 
     END AS sls_order_dt,
-    sls_ship_dt,
-    sls_due_dt,
     CASE 
-        WHEN sls_sales != sls_quantity * ABS(CAST(sls_price AS FLOAT)) OR
-            sls_sales <= 0 OR
-            sls_sales IS NULL 
+        WHEN sls_ship_dt IS NULL OR sls_ship_dt = 0 THEN 
+        DATE_ADD(
+            sls_order_dt, INTERVAL @day1 DAY
+        )
+        ELSE CAST(sls_ship_dt AS DATE) 
+    END AS sls_ship_dt,    
+    CASE 
+        WHEN sls_due_dt IS NULL OR sls_due_dt = 0 THEN 
+        DATE_ADD(
+            sls_ship_dt, INTERVAL @day2 DAY
+        )
+        ELSE CAST(sls_due_dt AS DATE) 
+    END AS sls_due_dt, 
+    CASE 
+        WHEN sls_sales IS NULL 
         THEN IF((sls_quantity * ABS(sls_price)) = 0, NULL, sls_quantity * ABS(sls_price))
-        ELSE sls_sales
+        ELSE ABS(sls_sales)
     END AS sls_sales,
-    sls_quantity,
+    CASE 
+        WHEN sls_quantity IS NULL 
+        THEN sls_sales/sls_price
+        ELSE sls_quantity
+    END AS sls_quantity,
     CASE 
         WHEN sls_price = 0 THEN NULL
         ELSE ABS(CAST(sls_price AS FLOAT))
