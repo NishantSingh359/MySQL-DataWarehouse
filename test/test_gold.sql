@@ -161,13 +161,15 @@ SELECT IF(
 SELECT '';
 SELECT '================== QUALITY CHECK IN fact_sales';
 
+
+SELECT * FROM fact_sales;
 SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
     FROM (
-        SELECT product_keys
+        SELECT product_key
         FROM gold.fact_sales
-        WHERE product_keys NOT IN (SELECT product_keys FROM gold.dim_product)
+        WHERE product_key NOT IN (SELECT product_key FROM gold.dim_product)
     )AS A) = 0,
     'No Invalid Product Keys Found',
     '---- Invalid Product Keys Found ----'
