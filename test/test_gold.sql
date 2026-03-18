@@ -161,8 +161,6 @@ SELECT IF(
 SELECT '';
 SELECT '================== QUALITY CHECK IN fact_sales';
 
-
-SELECT * FROM fact_sales;
 SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
@@ -171,21 +169,21 @@ SELECT IF(
         FROM gold.fact_sales
         WHERE product_key NOT IN (SELECT product_key FROM gold.dim_product)
     )AS A) = 0,
-    'No Invalid Product Keys Found',
-    '---- Invalid Product Keys Found ----'
-) AS '==== Product Keys';
+    'No Invalid Product Key Found',
+    '---- Invalid Product Key Found ----'
+) AS '==== Product Key';
 
 SELECT '';
 SELECT IF(
     (SELECT COUNT(*)
     FROM (
-        SELECT customer_keys
+        SELECT customer_key
         FROM gold.fact_sales
-        WHERE customer_keys NOT IN (SELECT customer_keys FROM gold.dim_customer)
+        WHERE customer_key NOT IN (SELECT customer_key FROM gold.dim_customer)
     )AS A) = 0,
-    'No Invalid Customer Keys Found',
-    '---- Invalid Customer Keys Found ----'
-) AS '==== Customer Keys';
+    'No Invalid Customer Key Found',
+    '---- Invalid Customer Key Found ----'
+) AS '==== Customer Key';
 
 SELECT '';
 SELECT IF(
