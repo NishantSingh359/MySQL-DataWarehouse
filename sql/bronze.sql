@@ -20,7 +20,7 @@ SET @crm_time1 = CURRENT_TIME();
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '=========================== CREATEING cust_info';
+SELECT '=========================== CREATING cust_info';
 DROP TABLE IF EXISTS bronze.cust_info;
 
 CREATE TABLE bronze.cust_info(
@@ -61,7 +61,7 @@ SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '=========================== CREATEING cust_info';
+SELECT '=========================== CREATING cust_info';
 DROP TABLE IF EXISTS bronze.prd_info;
 
 CREATE TABLE bronze.prd_info (
@@ -102,7 +102,7 @@ SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '======================= CREATEING sales_details';
+SELECT '======================= CREATING sales_details';
 DROP TABLE IF EXISTS bronze.sales_details; 
 
 
@@ -158,7 +158,7 @@ SET @erp_time1 = CURRENT_TIME();
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '============================ CREATEING prd_cate';
+SELECT '============================ CREATING prd_cate';
 DROP TABLE IF EXISTS bronze.prd_cate;
 
 CREATE TABLE bronze.prd_cate(
@@ -193,7 +193,7 @@ SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '============================ CREATEING cust_loc';
+SELECT '============================ CREATING cust_loc';
 DROP TABLE IF EXISTS bronze.cust_loc;
 
 CREATE TABLE bronze.cust_loc(
@@ -224,7 +224,7 @@ SELECT DATE_FORMAT(TIMEDIFF(@time2, @time1),'%i:%s') AS 'TABLE LOADING TIME';
 
 SET @time1 = CURRENT_TIME();
 
-SELECT '======================= CREATEING cust_per_info';
+SELECT '======================= CREATING cust_per_info';
 DROP TABLE IF EXISTS bronze.cust_per_info;
 
 CREATE TABLE bronze.cust_per_info (
