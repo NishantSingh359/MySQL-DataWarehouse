@@ -7,7 +7,7 @@ SELECT '================ CREATE SCHEMA ================';
 DROP SCHEMA IF EXISTS bronze;
 CREATE SCHEMA bronze;
 
-
+SET GLOBAL local_infile = 1;
 SELECT '-----------------------------------------------';
 SELECT '========== CREATE & LOAD CRM TABLES ===========';
 SELECT '-----------------------------------------------';
@@ -35,8 +35,7 @@ CREATE TABLE bronze.cust_info(
 
 SELECT '=================== LOADING DATA INTO cust_info';
 TRUNCATE TABLE bronze.cust_info;
-
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cust_info.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/crm/cust_info.csv'
 INTO TABLE bronze.cust_info
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -77,7 +76,7 @@ CREATE TABLE bronze.prd_info (
 SELECT '==================== LOADING DATA INTO prd_info';
 TRUNCATE TABLE bronze.prd_info;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/prd_info.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/crm/prd_info.csv'
 INTO TABLE bronze.prd_info
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -121,7 +120,7 @@ CREATE TABLE bronze.sales_details (
 SELECT '=============== LOADING DATA INTO sales_details';
 TRUNCATE TABLE bronze.sales_details;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/sales_details.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/crm/sales_details.csv'
 INTO TABLE bronze.sales_details
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -171,7 +170,7 @@ CREATE TABLE bronze.prd_cate(
 SELECT '==================== LOADING DATA INTO prd_cate';
 TRUNCATE TABLE bronze.prd_cate;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/prd_cate.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/erp/prd_cate.csv'
 INTO TABLE bronze.prd_cate
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -204,7 +203,7 @@ CREATE TABLE bronze.cust_loc(
 SELECT '==================== LOADING DATA INTO cust_loc';
 TRUNCATE TABLE bronze.cust_loc;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cust_loc.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/erp/cust_loc.csv'
 INTO TABLE bronze.cust_loc
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -236,7 +235,7 @@ CREATE TABLE bronze.cust_per_info (
 SELECT '=============== LOADING DATA INTO cust_per_info';
 TRUNCATE TABLE bronze.cust_per_info;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cust_per_info.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/TUF/OneDrive/Documents/Code/MY SQL/MySQL-DataWarehouse/data/erp/cust_per_info.csv'
 INTO TABLE bronze.cust_per_info
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
