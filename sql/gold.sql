@@ -31,7 +31,8 @@ CREATE TABLE gold.dim_customer (
     age_group VARCHAR(20),
     marital_status VARCHAR(20),
     country VARCHAR(20),
-    birthdate DATE
+    birthdate DATE,
+    created_at DATE
 );
 
 SELECT '=========== LOADING DATA INTO gold.dim_customer';
@@ -48,7 +49,8 @@ INSERT INTO
         age_group,
         marital_status,
         country,
-        birthdate
+        birthdate,
+        created_at
     )
 SELECT
     SUBSTRING(cst_key, 6),
@@ -68,32 +70,33 @@ SELECT
             YEAR,
             bdate,
             DATE('2014-02-01')
-        ) BETWEEN 0 AND 12  THEN 'child'
+        ) BETWEEN 0 AND 12  THEN 'Child'
         WHEN TIMESTAMPDIFF(
             YEAR,
             bdate,
             DATE('2014-02-01')
-        ) BETWEEN 13 AND 19  THEN 'teen'
+        ) BETWEEN 13 AND 19  THEN 'Teen'
         WHEN TIMESTAMPDIFF(
             YEAR,
             bdate,
             DATE('2014-02-01')
-        ) BETWEEN 20 AND 35  THEN 'young adult'
+        ) BETWEEN 20 AND 35  THEN 'Young Adult'
         WHEN TIMESTAMPDIFF(
             YEAR,
             bdate,
             DATE('2014-02-01')
-        ) BETWEEN 36 AND 59  THEN 'adult'
+        ) BETWEEN 36 AND 59  THEN 'Adult'
         WHEN TIMESTAMPDIFF(
             YEAR,
             bdate,
             DATE('2014-02-01')
-        ) > 60 THEN 'senior'
+        ) > 60 THEN 'Senior'
         ELSE NULL
     END AS age_group,
     cst_marital_status,
     cntry,
-    bdate
+    bdate,
+    cst_create_date AS created_at
 FROM silver.cust_info
     LEFT JOIN silver.cust_loc ON silver.cust_info.cst_key = silver.cust_loc.cid
     LEFT JOIN silver.cust_per_info ON silver.cust_info.cst_key = silver.cust_per_info.cid;
@@ -122,8 +125,7 @@ CREATE TABLE gold.dim_product (
     product_line VARCHAR(20),
     maintenance VARCHAR(20),
     cost FLOAT,
-    launch_date DATE,
-    last_order_date DATE
+    added_date DATE
 );
 
 SELECT '============ LOADING DATA INTO gold.dim_product';
@@ -139,8 +141,7 @@ INSERT INTO
         product_line,
         maintenance,
         cost,
-        launch_date,
-        last_order_date
+        added_date
     )
 SELECT
     prd_key,
@@ -150,8 +151,7 @@ SELECT
     prd_line,
     maintenance,
     prd_cost,
-    prd_launch_dt,
-    prd_last_ord_dt
+    prd_added_dt
 FROM silver.prd_info
     LEFT JOIN silver.prd_cate ON silver.prd_info.prd_cate_key = silver.prd_cate.id;
 

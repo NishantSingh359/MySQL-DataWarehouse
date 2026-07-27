@@ -1,0 +1,7 @@
+# files
+*.ipynb
+run_test_gold.bat
+
+#folder
+tests/
+data/

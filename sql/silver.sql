@@ -59,7 +59,7 @@ CASE
     WHEN UPPER(TRIM(cst_gndr)) = 'M' THEN 'Male'
     ELSE 'N/A'
 END AS cst_gndr,
-cst_create_date
+STR_TO_DATE(cst_create_date, '%Y-%m-%d') AS cst_create_date
 FROM (
     SELECT *,
     CASE
@@ -82,6 +82,7 @@ SET @time1 = CURRENT_TIME();
 
 SELECT '============================ CREATEING prd_info';
 
+DROP TABLE IF EXISTS silver.prd_info;
 CREATE TABLE silver.prd_info (
     prd_id INT,
     prd_key VARCHAR(20),
@@ -89,8 +90,7 @@ CREATE TABLE silver.prd_info (
     prd_nm VARCHAR(40),
     prd_cost INT,
     prd_line VARCHAR(20),
-    prd_launch_dt DATE,
-    prd_last_ord_dt DATE
+    prd_added_dt DATE
 );
 
 SELECT '==================== LOADING DATA INTO prd_info';
@@ -103,8 +103,7 @@ INSERT INTO silver.prd_info (
     prd_nm,
     prd_cost,
     prd_line,
-    prd_launch_dt,
-    prd_last_ord_dt
+    prd_added_dt
 )
 SELECT 
 prd_id,
@@ -119,23 +118,11 @@ CASE UPPER(TRIM(prd_line))
     WHEN 'S' THEN 'Other Sales'
     ELSE 'N/A'
 END AS prd_line,
-CASE 
-    WHEN prd_launch_dt IS NULL THEN STR_TO_DATE(prd_start_dt, '%d/%m/%Y')
-    ELSE prd_launch_dt
-END AS prd_launch_dt,
-prd_last_ord_dt
+STR_TO_DATE(prd_start_dt, '%Y-%m-%d')
 FROM (
     SELECT *,
     ROW_NUMBER() OVER(PARTITION BY SUBSTRING(prd_key,7)) as flag_one
     FROM bronze.prd_info
-    LEFT JOIN (
-            SELECT sls_prd_key,
-            DATE_SUB(MIN(sls_ship_dt), INTERVAL @days DAY) AS prd_launch_dt,
-            DATE_SUB(MAX(sls_ship_dt), INTERVAL @days DAY) AS prd_last_ord_dt
-            FROM bronze.sales_details
-            GROUP BY sls_prd_key
-        ) AS A
-    ON SUBSTRING(prd_key,7) = A.sls_prd_key
 ) AS A
 WHERE flag_one = 1;
 
